@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>live number countiing</h1>
+    <div id="container"></div>
+
+    <script>
+        const container = document.getElementById('container');
+        const eventSource= new EventSource('http://localhost:3000/stream')
+    
+        eventSource.onopen = ()=>{
+            console.log('connection open')
+        }
+    
+        eventSource.onerror = (err)=>{
+            console.log('error', err)
+        }
+    
+        eventSource.onmessage = ()=>{
+            console.log('Received Message:', event.data)
+    
+            const div = document.createElement('div')
+            
+            div.textContent = event.data
+    
+            div.classList.add('event')
+    
+            container.appendChild(div);
+        } 
+    </script>
+</body>
+</html>
+
